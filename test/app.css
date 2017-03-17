@@ -1,0 +1,8 @@
+.tdFadeIn {
+  animation-name: tdFadeIn;
+}
+@media only screen and (min-width: 600px) {
+  .animation {
+    animation: magic .2s , tdFadeOut .2s , scale-up-bottom .2s , scale-up-hor-right .2s , scale-up-bl .2s;
+  }
+}

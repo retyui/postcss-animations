@@ -1,0 +1,56 @@
+{
+	"name": "postcss-animations",
+	"version": "0.1.3",
+	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css",
+	"main": "dist/index.js",
+	"scripts": {
+		"lint": "./node_modules/.bin/eslint ./**/*.js",
+		"precompile": "npm run lint",
+		"compile": "babel lib --out-dir dist",
+		"pretest": "npm run compile",
+		"test": "./node_modules/.bin/mocha ./test/test.js",
+		"debug": "node --inspect --debug-brk ./node_modules/mocha/bin/_mocha ./test/test.js",
+		"prepublish": "npm run test"
+	},
+	"keywords": [
+		"postcss",
+		"css",
+		"postcss-plugin",
+		"animation",
+		"keyframes",
+		"animate.css",
+		"tuesday.css",
+		"magic.css"
+	],
+	"license": "MIT",
+	"dependencies": {
+		"postcss": "^6.0.2",
+		"postcss-animation.css-data": "^0.1.0",
+		"postcss-magic.css-data": "^0.1.0",
+		"postcss-tuesday.css-data": "^0.1.0",
+		"postcss-value-parser": "^3.3.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.24.1",
+		"babel-eslint": "^7.2.3",
+		"babel-plugin-add-module-exports": "^0.2.1",
+		"babel-preset-env": "^1.5.2",
+		"babel-register": "^6.24.1",
+		"chai": "3.5.0",
+		"eslint": "3.19.0",
+		"mocha": "3.4.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/retyui/postcss-animations.git"
+	},
+	"author": {
+		"name": "David Narbutovich",
+		"email": "vamnemne@gmail.com",
+		"url": "https://github.com/retyui"
+	},
+	"bugs": {
+		"url": "https://github.com/retyui/postcss-animations/issues"
+	},
+	"homepage": "https://github.com/retyui/postcss-animations"
+}
