@@ -7,17 +7,17 @@ matrix:
     - os: linux
       dist: trusty
       node_js: 4
-    - os: linux
-      dist: trusty
-      node_js: 5
+    # - os: linux
+    #   dist: trusty
+    #   node_js: 5
     - os: linux
       dist: trusty
       node_js: 6
-    - os: linux
-      dist: trusty
-      node_js: 7
+    # - os: linux
+    #   dist: trusty
+    #   node_js: 7
     - os: linux
       dist: trusty
       node_js: 8
-    - os: osx
-      node_js: 4
+    # - os: osx
+    #   node_js: 4
