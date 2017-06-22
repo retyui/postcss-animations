@@ -1,4 +1,4 @@
-# postcss-animations
+# postcss-animations [![npm version](https://badge.fury.io/js/postcss-animations.svg)](https://badge.fury.io/js/postcss-animations) [![Build Status](https://travis-ci.org/retyui/postcss-animations.svg?branch=master)](https://travis-ci.org/retyui/postcss-animations) [![dependencies Status](https://david-dm.org/retyui/postcss-animations/status.svg)](https://david-dm.org/retyui/postcss-animations)
 PostCSS plugin that adds `@keyframes` from 
 
 - [animate.css](https://daneden.github.io/animate.css/), 
@@ -6,7 +6,7 @@ PostCSS plugin that adds `@keyframes` from
 - [magic.css](https://minimamente.com/example/magic_animations/).
 
 ## Install
-`npm install postcss-animations --save-dev` or `yarn add postcss-animations --dev`
+`npm install postcss-animations --save-dev` or  `yarn add postcss-animations --dev`
 
 **Input:**
 ```css
@@ -49,23 +49,23 @@ postcss([ require('postcss-magic-animations')() ]);
 // or custom
 postcss([require('postcss-magic-animations')({
 	disableCheckCssVariables: false,
-	default: [ // override default list // https://github.com/retyui/postcss-animations/blob/master/index.js#L3-L7
-		require("postcss-animation.css-data")
-		, require("postcss-magic.css-data")
-		, require("postcss-tuesday.css-data")
+	default: [ // override default list // https://github.com/retyui/postcss-animations/blob/master/lib/index.js#L16
+		require("postcss-animation.css-data"),
+		require("postcss-magic.css-data"),
+		require("postcss-tuesday.css-data")
 	],
 	custom: {
-		muCustomAnimation: "@keyframes custom-animation-name{0%{opacity:0;}100%{opacity:1;}}"
-		, muCustomAnimation2: "@keyframes custom-animation-name{0%{opacity:1;}100%{opacity:0;}}"
+		muCustomAnimation: "@keyframes custom-animation-name{0%{opacity:0;}100%{opacity:1;}}",
+		muCustomAnimation2: "@keyframes custom-animation-name{0%{opacity:1;}100%{opacity:0;}}"
 	}
 })]);
 ```
 ## Options
 
-### `default`
+### `defaultData`
 type : `Array|Object` Keyframe Objects({"key": "css"}), 
 
-By default [we will connect this list](https://github.com/retyui/postcss-animations/blob/master/index.js#L3-L7) of objects:
+By default [we will connect this list](https://github.com/retyui/postcss-animations/blob/master/lib/index.js#L16) of objects:
 - [postcss-animation.css-data](https://github.com/retyui/postcss-animation.css-data)
 - [postcss-magic.css-data](https://github.com/retyui/postcss-magic.css-data)
 - [postcss-tuesday.css-data](https://github.com/retyui/postcss-tuesday.css-data)
@@ -76,7 +76,7 @@ type : `Array|Object` Keyframe Objects({"key": "css"}),
 example object :  
 ```javascript
 {
-	"custom-animation-name-in": "@keyframes custom-animation-name-in{0%{opacity:0;}100%{opacity:1;}}"
+	"custom-animation-name-in": "@keyframes custom-animation-name-in{0%{opacity:0;}100%{opacity:1;}}",
 	"custom-animation-name-out": "@keyframes custom-animation-name-out{0%{opacity:1;}100%{opacity:0;}}"
 }
 ```
