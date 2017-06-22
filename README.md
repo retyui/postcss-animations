@@ -49,7 +49,7 @@ postcss([ require('postcss-magic-animations')() ]);
 // or custom
 postcss([require('postcss-magic-animations')({
 	disableCheckCssVariables: false,
-	default: [ // override default list // https://github.com/retyui/postcss-animations/blob/master/lib/index.js#L16
+	defaultData: [ // override default list // https://github.com/retyui/postcss-animations/blob/master/lib/index.js#L16
 		require("postcss-animation.css-data"),
 		require("postcss-magic.css-data"),
 		require("postcss-tuesday.css-data")
