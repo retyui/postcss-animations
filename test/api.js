@@ -152,6 +152,24 @@ describe('postcss-image-set-generator', () => {
 					'100%{opacity:1;transform:perspective(600px)rotateX(0deg);transform-origin:centertop;animation-timing-function:ease-out;}' +
 				'}', done);
 		});
+
+		it('mimic', done => {
+			const input = '' +
+				':root {' +
+					'--fade-in-animation-name: lawnMower;' +
+				'}' +
+					'.lawnMower{' +
+					'animation-name: var(--fade-in-animation-name);' +
+				'}';
+
+			test(input, ':root {' +
+					'--fade-in-animation-name: lawnMower;' +
+				'}' +
+				'.lawnMower{' +
+					'animation-name: var(--fade-in-animation-name);' +
+				'}' +
+				'@keyframes lawnMower{0%{opacity:1;}to{opacity:1;transform:translate3d(0, 0, 0) rotateY(12225deg);}}', done);
+		});
 	});
 
 	describe('Options', () => {

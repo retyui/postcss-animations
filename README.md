@@ -1,13 +1,14 @@
-# postcss-animations 
+# postcss-animations
 [![npm](https://img.shields.io/npm/v/postcss-animations.svg)](https://www.npmjs.com/package/postcss-animations)
 [![AppVeyor](https://img.shields.io/appveyor/ci/retyui/postcss-animations.svg?label=win)](https://ci.appveyor.com/project/retyui/postcss-animations)
 [![Travis](https://img.shields.io/travis/retyui/postcss-animations.svg?label=unix)](https://travis-ci.org/retyui/postcss-animations)
 [![David](https://img.shields.io/david/retyui/postcss-animations.svg)](https://david-dm.org/retyui/postcss-animations)
 
-PostCSS plugin that adds `@keyframes` from 
-- [animate.css](https://daneden.github.io/animate.css/), 
+PostCSS plugin that adds `@keyframes` from
+- [animate.css](https://daneden.github.io/animate.css/),
 - [tuesday.css](https://shakrmedia.github.io/tuesday/),
 - [magic.css](https://minimamente.com/example/magic_animations/).
+- [mimic.css](https://erictreacy.me/mimic.css/).
 
 ## Install
 `npm install postcss-animations --save-dev` or  `yarn add postcss-animations --dev`
@@ -44,7 +45,7 @@ PostCSS plugin that adds `@keyframes` from
 ```
 
 ## Usage
-```javascript
+```js
 postcss([ require('postcss-magic-animations')(options) ])
 
 //default
@@ -56,7 +57,8 @@ postcss([require('postcss-magic-animations')({
 	defaultData: [ // override default list // https://github.com/retyui/postcss-animations/blob/master/lib/index.js#L16
 		require("postcss-animation.css-data"),
 		require("postcss-magic.css-data"),
-		require("postcss-tuesday.css-data")
+		require("postcss-tuesday.css-data"),
+		require("postcss-mimic.css-data")
 	],
 	custom: {
 		muCustomAnimation: "@keyframes custom-animation-name{0%{opacity:0;}100%{opacity:1;}}",
@@ -67,7 +69,7 @@ postcss([require('postcss-magic-animations')({
 ## Options
 
 ### `defaultData`
-type : `Array|Object` Keyframe Objects({"key": "css"}), 
+type : `Array|Object` Keyframe Objects({"key": "css"}),
 
 By default [we will connect this list](https://github.com/retyui/postcss-animations/blob/master/lib/index.js#L16) of objects:
 - [postcss-animation.css-data](https://github.com/retyui/postcss-animation.css-data)
@@ -76,9 +78,9 @@ By default [we will connect this list](https://github.com/retyui/postcss-animati
 You can override this list!
 
 ### `custom`
-type : `Array|Object` Keyframe Objects({"key": "css"}), 
-example object :  
-```javascript
+type : `Array|Object` Keyframe Objects({"key": "css"}),
+example object :
+```js
 {
 	"custom-animation-name-in": "@keyframes custom-animation-name-in{0%{opacity:0;}100%{opacity:1;}}",
 	"custom-animation-name-out": "@keyframes custom-animation-name-out{0%{opacity:1;}100%{opacity:0;}}"
@@ -86,25 +88,23 @@ example object :
 ```
 
 ### `disableCheckCssVariables`
-type: `Boolean`, 
+type: `Boolean`,
 default: `false`
 Disable checking and search variables css
 
 
 
 ## [Animista](http://animista.net) support example:
-```javascript
+```js
 const kfParser = require('css-parse-keyframes');
 
 postcss([require('postcss-magic-animations')({
 	custom: [
 		// your Generated code
-		kfParser.css('@keyframes scale-up-center {0% { transform: scale(0.5); } 100% { transform: scale(1); }}'), 
-		// or saved 
-		kfParser.files('./animista-demo.css'),                      
+		kfParser.css('@keyframes scale-up-center {0% { transform: scale(0.5); } 100% { transform: scale(1); }}'),
+		// or saved
+		kfParser.files('./animista-demo.css'),
 		kfParser.files(['./animista-text.css','./animista-base.css']),
 	]
 })]);
 ```
-
-[![NPM](https://nodei.co/npm-dl/postcss-animations.png?height=3)](https://nodei.co/npm/postcss-animations/)

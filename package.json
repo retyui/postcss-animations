@@ -1,7 +1,7 @@
 {
 	"name": "postcss-animations",
 	"version": "0.2.3",
-	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css",
+	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
 	"main": "dist/index.js",
 	"scripts": {
 		"lint": "./node_modules/.bin/eslint ./**/*.js",
@@ -20,13 +20,15 @@
 		"keyframes",
 		"animate.css",
 		"tuesday.css",
-		"magic.css"
+		"magic.css",
+		"mimic.css"
 	],
 	"license": "MIT",
 	"dependencies": {
-		"postcss": "^6.0.2",
+		"postcss": "^6.0.12",
 		"postcss-animation.css-data": "^0.1.0",
 		"postcss-magic.css-data": "^0.1.0",
+		"postcss-mimic.css-data": "^0.0.2",
 		"postcss-tuesday.css-data": "^0.1.0",
 		"postcss-value-parser": "^3.3.0"
 	},
