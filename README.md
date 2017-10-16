@@ -100,16 +100,16 @@ Disable checking and search variables css
 
 ## [Animista](http://animista.net) support example:
 ```js
-const keyframesParser = require('css-parse-keyframes');
+const { css, files } = require('css-parse-keyframes');
 
 postcss([
 	require('postcss-magic-animations')({
 		custom: [
 			// your Generated code
-			keyframesParser.css('@keyframes scale-up-center {0% { transform: scale(0.5); } 100% { transform: scale(1); }}'),
+			css('@keyframes scale-up-center {0% { transform: scale(0.5); } 100% { transform: scale(1); }}'),
 			// or saved
-			keyframesParser.files('./animista-demo.css'),
-			keyframesParser.files(['./animista-text.css','./animista-base.css']),
+			files('./animista-demo.css'),
+			files(['./animista-text.css','./animista-base.css']),
 		]
 	})
 ]);
