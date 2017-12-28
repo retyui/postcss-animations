@@ -51,7 +51,7 @@ npm install --save-dev postcss-tuesday.css-data postcss-mimic.css-data
 ```js
 postcss([
     require('postcss-animations')({
-        disableCheckCssVariables: false,
+        disableCheckCssVariables: true,
         checkDuplications: true,
         data: [
             require("postcss-animation.css-data"),
