@@ -8,6 +8,6 @@
 .babelrc
 yarn.lock
 appveyor.yml
-lib/
+src/
 test/
 .idea/

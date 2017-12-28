@@ -1,10 +1,12 @@
-const scanKey = '__isScanedPostcssAnimations__';
+const scanKey = "__isScanedPostcssAnimations__";
+
 export default class SearcherAnimations {
 	constructor(keyframes, checkCssVariables) {
-		this.allCssVars = {};
-		this.hasKeyframes = {};
-		this.keyframes = keyframes;
-		this.checkCssVariables = checkCssVariables;
+		this._allCssVars = {};
+		this._keyframes = keyframes;
+		this._checkCssVariables = checkCssVariables;
+
+		this.clearCache();
 	}
 
 	static isCssVariable(v) {
@@ -15,29 +17,37 @@ export default class SearcherAnimations {
 		const key = decl.prop;
 		const val = decl.value;
 
-		if (this.allCssVars[key] === undefined) {
-			this.allCssVars[key] = [val];
-		} else if (this.allCssVars[key].indexOf(val) === -1) {
-			this.allCssVars[key].push(val);
+		if (this._allCssVars[key] === undefined) {
+			this._allCssVars[key] = [val];
+		} else if (this._allCssVars[key].indexOf(val) === -1) {
+			this._allCssVars[key].push(val);
 		}
 	}
 
 	get(key) {
-		return this.allCssVars[key];
+		return this._allCssVars[key];
 	}
 
 	clearCache() {
-		this.hasKeyframes = {};
+		this._hasKeyframes = new Set();
 	}
 
-	appendKeyFrames(css, value) {
-		if (!this.keyframes[value] || this.hasKeyframes[value]) {
+	_alredyAdded(key) {
+		return this._hasKeyframes.has(key);
+	}
+
+	_addCache(val) {
+		return this._hasKeyframes.add(val);
+	}
+	appendKeyFrames(root, value) {
+		const isAnimationAdded = this._alredyAdded(value);
+		if (!this._keyframes.has(value) || isAnimationAdded) {
 			return;
 		}
-		// console.log('[postcss-animations]: '+value);
-		if (!this.hasKeyframes[value]) {
-			this.hasKeyframes[value] = true;
-			css.append(this.keyframes[value]);
+
+		if (!isAnimationAdded) {
+			this._addCache(value);
+			root.append(this._keyframes.get(value));
 		}
 	}
 
@@ -51,7 +61,10 @@ export default class SearcherAnimations {
 	}
 
 	appendKeyframes(css, value) {
-		if (this.checkCssVariables && SearcherAnimations.isCssVariable(value)) {
+		if (
+			this._checkCssVariables &&
+			SearcherAnimations.isCssVariable(value)
+		) {
 			let matchCssVars = value.match(/(--[^\s\,\)]*)/g); // https://regex101.com/r/6qszCQ/2
 
 			if (matchCssVars !== null) {
@@ -75,7 +88,7 @@ export default class SearcherAnimations {
 				this.appendKeyFrames(css, element);
 			});
 		} else {
-			this.appendKeyFrames(css, value)
+			this.appendKeyFrames(css, value);
 		}
 	}
 }

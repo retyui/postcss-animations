@@ -6,7 +6,5 @@
 			}
 		}]
 	],
-	"plugins": [
-		"add-module-exports"
-	]
+	"plugins": ["transform-object-rest-spread", "add-module-exports"]
 }
