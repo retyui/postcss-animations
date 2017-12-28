@@ -11,3 +11,5 @@ appveyor.yml
 src/
 test/
 .idea/
+_local/
+CHANGELOG.md
