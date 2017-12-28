@@ -1,6 +1,6 @@
 {
 	"name": "postcss-animations",
-	"version": "6.0.0",
+	"version": "6.0.1",
 	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
 	"license": "MIT",
 	"main": "dist/index.js",
