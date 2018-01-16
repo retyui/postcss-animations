@@ -6,27 +6,29 @@
 	"main": "lib/index.js",
 	"files": ["lib"],
 	"scripts": {
+		"compile": "babel src --out-dir lib",
 		"lint": "eslint ./src/*.js",
 		"precompile": "npm run lint",
-		"compile": "babel src --out-dir lib",
+		"prepare": "npm run test",
 		"pretest": "npm run compile",
-		"test": "mocha --compilers js:babel-register ./test/test.mjs",
-		"prepublish": "npm run test"
+		"test": "mocha --compilers js:babel-register ./test/test.mjs"
 	},
 	"dependencies": {
-		"postcss": "^6",
 		"postcss-value-parser": "^3"
 	},
+	"peerDependencies": {
+		"postcss": "6.x"
+	},
 	"keywords": [
-		"postcss",
-		"css",
-		"postcss-plugin",
-		"animation",
-		"keyframes",
 		"animate.css",
-		"tuesday.css",
+		"animation",
+		"css",
+		"keyframes",
 		"magic.css",
-		"mimic.css"
+		"mimic.css",
+		"postcss",
+		"postcss-plugin",
+		"tuesday.css"
 	],
 	"devDependencies": {
 		"babel-cli": "^6.24.1",
@@ -38,22 +40,14 @@
 		"chai": "3.5.0",
 		"eslint": "3.19.0",
 		"mocha": "3.4.2",
-		"postcss-animation.css-data": "^0.1.0",
-		"postcss-magic.css-data": "^0.1.0",
-		"postcss-mimic.css-data": "^0.0.2",
-		"postcss-tuesday.css-data": "^0.1.0"
+		"postcss-animation.css-data": "^1.0.0",
+		"postcss-magic.css-data": "^1.0.0",
+		"postcss-mimic.css-data": "^1.0.0",
+		"postcss-tuesday.css-data": "^1.0.0"
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/retyui/postcss-animations.git"
-	},
-	"author": {
-		"name": "David Narbutovich",
-		"email": "vamnemne@gmail.com",
-		"url": "https://github.com/retyui"
-	},
-	"bugs": {
-		"url": "https://github.com/retyui/postcss-animations/issues"
-	},
-	"homepage": "https://github.com/retyui/postcss-animations"
+	"repository": "https://github.com/retyui/postcss-animations",
+	"author": "David Narbutovich <vamnemne@gmail.com>",
+	"engines": {
+		"node": ">= 4.2"
+	}
 }

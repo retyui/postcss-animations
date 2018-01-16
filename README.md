@@ -6,96 +6,139 @@
 [![David](https://img.shields.io/david/retyui/postcss-animations.svg)](https://david-dm.org/retyui/postcss-animations)
 
 PostCSS plugin that adds `@keyframes` from:
-- [animate.css](https://daneden.github.io/animate.css/) - [postcss-animation.css-data](https://github.com/retyui/postcss-animation.css-data);
-- [magic.css](https://minimamente.com/example/magic_animations/) - [postcss-magic.css-data](https://github.com/retyui/postcss-magic.css-data);
-- [tuesday.css](https://shakrmedia.github.io/tuesday/) - [postcss-tuesday.css-data](https://github.com/retyui/postcss-tuesday.css-data);
-- [mimic.css](https://erictreacy.me/mimic.css/) - [postcss-mimic.css-data](https://github.com/retyui/postcss-mimic.css-data).
+
+* [![npm postcss-animation.css-data](https://img.shields.io/npm/dm/postcss-animation.css-data.svg)](https://www.npmjs.com/package/postcss-animation.css-data) [postcss-animation.css-data](https://github.com/retyui/postcss-animation.css-data)
+* [![npm postcss-magic.css-data](https://img.shields.io/npm/dm/postcss-magic.css-data.svg)](https://www.npmjs.com/package/postcss-magic.css-data) [postcss-magic.css-data](https://github.com/retyui/postcss-magic.css-data)
+* [![npm postcss-mimic.css-data](https://img.shields.io/npm/dm/postcss-mimic.css-data.svg)](https://www.npmjs.com/package/postcss-mimic.css-data) [postcss-mimic.css-data](https://github.com/retyui/postcss-mimic.css-data)
+* [![npm postcss-tuesday.css-data](https://img.shields.io/npm/dm/postcss-tuesday.css-data.svg)](https://www.npmjs.com/package/postcss-tuesday.css-data) [postcss-tuesday.css-data](https://github.com/retyui/postcss-tuesday.css-data)
 
 ## Install
+
 ```bash
-npm install --save-dev postcss-animations
+yarn add -D postcss-animations
 
 # and the animation data set you need
-npm install --save-dev postcss-animation.css-data postcss-magic.css-data
-npm install --save-dev postcss-tuesday.css-data postcss-mimic.css-data
+yarn add -D postcss-animation.css-data
+yarn add -D postcss-magic.css-data
+yarn add -D postcss-mimic.css-data
+yarn add -D postcss-tuesday.css-data
 ```
 
 **Input:**
+
 ```css
-:root{
-    --fade-in-animation-name: tdFadeOut; /* addet css varibles support (Disabled default)*/ }
+:root {
+  --fade-in-animation-name: tdFadeOut; /* addet css varibles support (Disabled default)*/
+}
 
 .tdFadeIn {
-    animation-name: tdFadeIn; }
+  animation-name: tdFadeIn;
+}
 
-.tdFadeOut{
-    animation-name: var(--fade-in-animation-name); /* or css variables */ }
+.tdFadeOut {
+  animation-name: var(--fade-in-animation-name); /* or css variables */
+}
 ```
 
 **Output:**
+
 ```css
-:root{
-    --fade-in-animation-name: tdFadeOut; }
+:root {
+  --fade-in-animation-name: tdFadeOut;
+}
 
 .tdFadeIn {
-    animation-name: tdFadeIn; }
+  animation-name: tdFadeIn;
+}
 
-.tdFadeOut{
-    animation-name: var(--fade-in-animation-name); }
+.tdFadeOut {
+  animation-name: var(--fade-in-animation-name);
+}
 
-@keyframes tdFadeIn  { /* ... */ }
-@keyframes tdFadeOut { /* ... */ }
+@keyframes tdFadeIn {
+  /* ... */
+}
+@keyframes tdFadeOut {
+  /* added if 'disableCheckCssVariables: false' */
+  /* ... */
+}
 ```
 
 ## Usage
+
 ```js
-postcss([
-    require('postcss-animations')({
-        disableCheckCssVariables: true,
-        checkDuplications: true,
-        data: [
-            require("postcss-animation.css-data"),
-            require("postcss-magic.css-data"),
-            require("postcss-tuesday.css-data"),
-            require("postcss-mimic.css-data"),
-            { // or custom
-                muCustomAnimation: "@keyframes custom-animation-name{0%{opacity:0;}100%{opacity:1;}}",
-                muCustomAnimation2: "@keyframes custom-animation-name{0%{opacity:1;}100%{opacity:0;}}"
-            }
-        ]
-    })
-]);
+const fs = require("fs");
+const postcss = require("postcss");
+const postcssAnimations = require("postcss-animations");
+
+const [from, to] = ["./src/style.css", "./dist/style.css"];
+const CSS = fs.readFileSync(from);
+const PLUGINS = [
+  postcssAnimations({
+    data: [
+      require("postcss-animation.css-data"),
+      require("postcss-magic.css-data"),
+      require("postcss-mimic.css-data"),
+      require("postcss-tuesday.css-data")
+    ],
+    checkDuplications: true,
+    disableCheckCssVariables: true
+  })
+];
+
+(async () => {
+  try {
+    const { css, messages } = await postcss(PLUGINS).process(CSS, { from, to });
+    messages
+      .filter(({ type }) => type === "warning")
+      .map(msg => console.log(msg.toString()));
+    console.log(css);
+    fs.writeFileSync(to, css);
+  } catch (e) {
+    console.error(e);
+  }
+})();
 ```
+
 ## Options
 
 ### `data`
-type : `Array|Object` Keyframe Objects({"animation-name": "css"}),
+
+type : `Array|Object`CssKeyframe Set {"animation-name": "css"},
 
 ### `disableCheckCssVariables`
+
 type: `Boolean`,
 default: `true`
-Disable checking and search variables css (`var(--name)`)
+
+Disable checking and search variables css `var(--name)`
 
 ### `checkDuplications`
+
 type: `Boolean`,
 default: `true`
+
 Display a warning if find duplicate name of the animation
 
-
-
 ## [Animista](http://animista.net) support example:
+
 ```js
-const { css, files } = require('css-parse-keyframes');
+const {
+  css: parseFromCss,
+  files: parseFromFile
+} = require("css-parse-keyframes");
 
 postcss([
-    require('postcss-animations')({
-        data: [
-            // your Generated code
-            css('@keyframes scale-up-center {0% { transform: scale(0.5); } 100% { transform: scale(1); }}'),
-            // or saved
-            files('./animista-demo.css'),
-            files(['./animista-text.css','./animista-base.css']),
-        ]
-    })
+  require("postcss-animations")({
+    data: [
+      // your Generated code
+      parseFromCss(
+        "@keyframes scale-up-center {0% { transform: scale(0.5); } 100% { transform: scale(1); }}"
+      ),
+      // or saved
+      parseFromFile("./animista-demo.css"),
+      parseFromFile(["./animista-text.css", "./animista-base.css"])
+    ]
+  })
 ]);
 ```
