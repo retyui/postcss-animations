@@ -2,9 +2,12 @@
 	"presets": [
 		["env", {
 			"targets": {
-				"node": ["4.0.0"]
+				"node": ["4.2.0"]
 			}
 		}]
 	],
-	"plugins": ["transform-object-rest-spread", "add-module-exports"]
+	"plugins": [
+		"transform-object-rest-spread",
+		"add-module-exports"
+	]
 }

@@ -1,22 +1,17 @@
 {
 	"name": "postcss-animations",
-	"version": "6.0.2",
+	"version": "6.1.0",
 	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
 	"license": "MIT",
 	"main": "lib/index.js",
+	"files": ["lib"],
 	"scripts": {
-		"lint": "eslint ./**/*.js",
+		"lint": "eslint ./src/*.js",
 		"precompile": "npm run lint",
 		"compile": "babel src --out-dir lib",
 		"pretest": "npm run compile",
 		"test": "mocha --compilers js:babel-register ./test/test.mjs",
 		"prepublish": "npm run test"
-	},
-	"peerDependencies": {
-		"postcss-animation.css-data": "^0.0.1",
-		"postcss-magic.css-data": "^0.0.1",
-		"postcss-mimic.css-data": "^0.0.1",
-		"postcss-tuesday.css-data": "^0.0.1"
 	},
 	"dependencies": {
 		"postcss": "^6",
