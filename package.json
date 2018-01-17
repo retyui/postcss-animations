@@ -42,6 +42,7 @@
 		"chai": "3.5.0",
 		"eslint": "3.19.0",
 		"mocha": "3.4.2",
+		"postcss": "^6.0.0",
 		"postcss-animation.css-data": "^1.0.0",
 		"postcss-magic.css-data": "^1.0.0",
 		"postcss-mimic.css-data": "^1.0.0",
