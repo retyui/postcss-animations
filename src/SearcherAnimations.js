@@ -65,7 +65,7 @@ export default class SearcherAnimations {
 			this._checkCssVariables &&
 			SearcherAnimations.isCssVariable(value)
 		) {
-			let matchCssVars = value.match(/(--[^\s\,\)]*)/g); // https://regex101.com/r/6qszCQ/2
+			let matchCssVars = value.match(/(--[^\s,)]*)/g); // https://regex101.com/r/6qszCQ/2
 
 			if (matchCssVars !== null) {
 				this.oneScanCSS(css);
