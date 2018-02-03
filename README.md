@@ -1,5 +1,7 @@
 # postcss-animations
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/retyui/postcss-animations.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/postcss-animations.svg)](https://www.npmjs.com/package/postcss-animations)
 [![AppVeyor](https://img.shields.io/appveyor/ci/retyui/postcss-animations.svg?label=win)](https://ci.appveyor.com/project/retyui/postcss-animations)
 [![Travis](https://img.shields.io/travis/retyui/postcss-animations.svg?label=unix)](https://travis-ci.org/retyui/postcss-animations)
