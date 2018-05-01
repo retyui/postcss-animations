@@ -1,4 +1,4 @@
-import { PLUGIN_NAME } from './info.js';
+import { PLUGIN_NAME } from "./info.js";
 
 function objectMap(obj, callback) {
 	return Object.keys(obj).map(prop => {
@@ -25,9 +25,7 @@ export function concatMap({
 			if (checkDuplications) {
 				for (const key of animMap.keys()) {
 					if (all.has(key)) {
-						console.warn(
-							`[${PLUGIN_NAME}]: Duplicate animation name: ${key}`
-						);
+						console.warn(`[${PLUGIN_NAME}]: Duplicate animation name: ${key}`);
 					}
 				}
 			}

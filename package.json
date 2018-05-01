@@ -8,18 +8,19 @@
 		"lib"
 	],
 	"scripts": {
-		"compile": "babel src --out-dir lib",
-		"lint": "eslint ./src/*.js",
-		"precompile": "npm run lint",
-		"prepare": "npm run test",
-		"pretest": "npm run compile",
-		"test": "mocha --compilers js:babel-register ./test/test.mjs"
+		"build": "babel src --out-dir lib",
+		"lint": "eslint --fix ./src/*.js",
+		"pretty": "prettier  \"test/*.js\" \"src/*.js\" \".eslintrc.js\" --write",
+		"prebuild": "npm run lint",
+		"pretest": "npm run build",
+		"test": "mocha --compilers js:babel-register ./test/test.js",
+		"precommit": "lint-staged"
 	},
 	"dependencies": {
-		"postcss-value-parser": "^3"
+		"postcss-value-parser": "^3.0.0"
 	},
 	"peerDependencies": {
-		"postcss": "6.x"
+		"postcss": "^6.0.0"
 	},
 	"keywords": [
 		"animate.css",
@@ -34,23 +35,28 @@
 	],
 	"devDependencies": {
 		"babel-cli": "^6.24.1",
-		"babel-eslint": "^8.2.1",
+		"babel-eslint": "^8.2.3",
 		"babel-plugin-add-module-exports": "^0.2.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.5.2",
 		"babel-register": "^6.24.1",
 		"chai": "4.1.2",
-		"eslint": "4.19.0",
-		"mocha": "5.0.4",
+		"eslint": "^4.19.1",
+		"eslint-config-prettier": "^2.9.0",
+		"eslint-plugin-prettier": "^2.6.0",
+		"husky": "^0.14.3",
+		"lint-staged": "^7.0.5",
+		"mocha": "5.1.1",
 		"postcss": "^6.0.0",
 		"postcss-animation.css-data": "^1.0.0",
 		"postcss-magic.css-data": "^1.0.0",
 		"postcss-mimic.css-data": "^1.0.0",
-		"postcss-tuesday.css-data": "^1.0.0"
+		"postcss-tuesday.css-data": "^1.0.0",
+		"prettier": "^1.12.1"
 	},
 	"repository": "https://github.com/retyui/postcss-animations",
 	"author": "David Narbutovich <vamnemne@gmail.com>",
 	"engines": {
-		"node": ">= 4.2"
+		"node": ">=6.11"
 	}
 }

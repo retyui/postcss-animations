@@ -28,7 +28,7 @@ const ignoredWords = [
 export default plugin(
 	PLUGIN_NAME,
 	({ data, disableCheckCssVariables = true, checkDuplications = true }) => {
-		if (!data || Array.isArray(data) && data.length === 0) {
+		if (!data || (Array.isArray(data) && data.length === 0)) {
 			return console.log(
 				`[${PLUGIN_NAME}] Error: Options data for the css animations can not be empty!`
 			);
@@ -70,9 +70,7 @@ export default plugin(
 					.forEach(e => {
 						proxyAllCssVar.appendKeyframes(
 							root,
-							e.type === "function"
-								? valueParser.stringify(e)
-								: e.value
+							e.type === "function" ? valueParser.stringify(e) : e.value
 						);
 					});
 			});

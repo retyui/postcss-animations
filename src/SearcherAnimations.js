@@ -39,6 +39,7 @@ export default class SearcherAnimations {
 	_addCache(val) {
 		return this._hasKeyframes.add(val);
 	}
+
 	appendKeyFrames(root, value) {
 		const isAnimationAdded = this._alredyAdded(value);
 		if (!this._keyframes.has(value) || isAnimationAdded) {
@@ -61,10 +62,7 @@ export default class SearcherAnimations {
 	}
 
 	appendKeyframes(css, value) {
-		if (
-			this._checkCssVariables &&
-			SearcherAnimations.isCssVariable(value)
-		) {
+		if (this._checkCssVariables && SearcherAnimations.isCssVariable(value)) {
 			let matchCssVars = value.match(/(--[^\s,)]*)/g); // https://regex101.com/r/6qszCQ/2
 
 			if (matchCssVars !== null) {
