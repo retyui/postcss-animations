@@ -1,4 +1,4 @@
-const scanKey = "__isScanedPostcssAnimations__";
+const scanKey = `__isScannedPostCssAnimations__${Math.random()}`;
 
 export default class SearcherAnimations {
 	constructor(keyframes, checkCssVariables) {
@@ -13,7 +13,7 @@ export default class SearcherAnimations {
 		return v.match(/var\(--.+\)/) !== null;
 	}
 
-	add(decl) {
+	add = decl => {
 		const key = decl.prop;
 		const val = decl.value;
 
@@ -22,7 +22,7 @@ export default class SearcherAnimations {
 		} else if (this._allCssVars[key].indexOf(val) === -1) {
 			this._allCssVars[key].push(val);
 		}
-	}
+	};
 
 	get(key) {
 		return this._allCssVars[key];
@@ -32,7 +32,7 @@ export default class SearcherAnimations {
 		this._hasKeyframes = new Set();
 	}
 
-	_alredyAdded(key) {
+	_alreadyAdded(key) {
 		return this._hasKeyframes.has(key);
 	}
 
@@ -41,7 +41,7 @@ export default class SearcherAnimations {
 	}
 
 	appendKeyFrames(root, value) {
-		const isAnimationAdded = this._alredyAdded(value);
+		const isAnimationAdded = this._alreadyAdded(value);
 		if (!this._keyframes.has(value) || isAnimationAdded) {
 			return;
 		}
@@ -55,7 +55,7 @@ export default class SearcherAnimations {
 	oneScanCSS(css) {
 		if (!css[scanKey]) {
 			css.walkRules(rule => {
-				rule.walkDecls(/^--/, this.add.bind(this));
+				rule.walkDecls(/^--/, this.add);
 			});
 		}
 		css[scanKey] = true;
