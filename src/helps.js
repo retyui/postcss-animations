@@ -1,7 +1,8 @@
 import { PLUGIN_NAME } from "./info.js";
-import entries from "object.entries";
 
-const objectEntries = Object.entries ? Object.entries : entries;
+const objectEntries = Object.entries
+	? Object.entries
+	: require("object.entries");
 
 export function concatMap({
 	data,

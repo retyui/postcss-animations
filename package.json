@@ -17,7 +17,7 @@
 		"precommit": "lint-staged"
 	},
 	"dependencies": {
-		"@babel/plugin-proposal-class-properties": "^7.1.0",
+		"object.entries": "^1.0.4",
 		"postcss-value-parser": "^3.0.0"
 	},
 	"peerDependencies": {
@@ -40,6 +40,7 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
 		"@babel/preset-env": "^7.0.0",
 		"@babel/register": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
 		"babel-eslint": "^9.0.0",
 		"babel-plugin-add-module-exports": "^1.0.0",
 		"chai": "4.1.2",
