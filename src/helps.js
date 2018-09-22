@@ -1,4 +1,7 @@
 import { PLUGIN_NAME } from "./info.js";
+import entries from "object.entries";
+
+const objectEntries = Object.entries ? Object.entries : entries;
 
 export function concatMap({
 	data,
@@ -6,7 +9,7 @@ export function concatMap({
 	checkDuplications = true
 }) {
 	return (Array.isArray(data) ? data : [data])
-		.map(obj => new Map(Object.entries(obj)))
+		.map(obj => new Map(objectEntries(obj)))
 		.reduce((all, animMap) => {
 			if (checkDuplications) {
 				for (const key of animMap.keys()) {
