@@ -1,6 +1,6 @@
 {
 	"name": "postcss-animations",
-	"version": "7.0.0",
+	"version": "7.0.1",
 	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
 	"license": "MIT",
 	"main": "lib/index.js",
@@ -40,7 +40,7 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
 		"@babel/preset-env": "^7.0.0",
 		"@babel/register": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
+		"@babel/plugin-proposal-class-properties": "^7.1.0",
 		"babel-eslint": "^9.0.0",
 		"babel-plugin-add-module-exports": "^1.0.0",
 		"chai": "4.1.2",
