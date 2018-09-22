@@ -1,6 +1,6 @@
 {
 	"name": "postcss-animations",
-	"version": "6.1.2",
+	"version": "7.0.0",
 	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
 	"license": "MIT",
 	"main": "lib/index.js",
@@ -13,14 +13,15 @@
 		"pretty": "prettier  \"test/*.js\" \"src/*.js\" \".eslintrc.js\" --write",
 		"prebuild": "npm run lint",
 		"pretest": "npm run build",
-		"test": "mocha --compilers js:babel-register ./test/test.js",
+		"test": "mocha --compilers js:@babel/register ./test/test.js",
 		"precommit": "lint-staged"
 	},
 	"dependencies": {
+		"object.entries": "^1.0.4",
 		"postcss-value-parser": "^3.0.0"
 	},
 	"peerDependencies": {
-		"postcss": "^6.0.0"
+		"postcss": "^7.0.0"
 	},
 	"keywords": [
 		"animate.css",
@@ -34,20 +35,22 @@
 		"tuesday.css"
 	],
 	"devDependencies": {
-		"babel-cli": "^6.24.1",
-		"babel-eslint": "^8.2.3",
-		"babel-plugin-add-module-exports": "^0.2.1",
-		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-preset-env": "^1.5.2",
-		"babel-register": "^6.24.1",
+		"@babel/cli": "^7.0.0",
+		"@babel/core": "^7.0.0",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+		"@babel/preset-env": "^7.0.0",
+		"@babel/register": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+		"babel-eslint": "^9.0.0",
+		"babel-plugin-add-module-exports": "^1.0.0",
 		"chai": "4.1.2",
-		"eslint": "^4.19.1",
-		"eslint-config-prettier": "^2.9.0",
+		"eslint": "^5.6.0",
+		"eslint-config-prettier": "^3.1.0",
 		"eslint-plugin-prettier": "^2.6.0",
-		"husky": "^0.14.3",
+		"husky": "^1.0.0-rc.14",
 		"lint-staged": "^7.0.5",
-		"mocha": "5.1.1",
-		"postcss": "^6.0.0",
+		"mocha": "^5.2.0",
+		"postcss": "^7.0.2",
 		"postcss-animation.css-data": "^1.0.0",
 		"postcss-magic.css-data": "^1.0.0",
 		"postcss-mimic.css-data": "^1.0.0",
