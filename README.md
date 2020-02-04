@@ -17,10 +17,7 @@ PostCSS plugin that adds `@keyframes` from:
 yarn add -D postcss-animations
 
 # and the animation data set you need
-yarn add -D postcss-animation.css-data
-yarn add -D postcss-magic.css-data
-yarn add -D postcss-mimic.css-data
-yarn add -D postcss-tuesday.css-data
+yarn add -D postcss-animation.css-data postcss-magic.css-data postcss-mimic.css-data postcss-tuesday.css-data
 ```
 
 **Input:**
