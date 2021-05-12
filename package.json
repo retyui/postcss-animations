@@ -50,7 +50,7 @@
 		"husky": "^1.0.0-rc.14",
 		"lint-staged": "^7.0.5",
 		"mocha": "^5.2.0",
-		"postcss": "^7.0.2",
+		"postcss": "^8.2.10",
 		"postcss-animation.css-data": "^1.0.0",
 		"postcss-magic.css-data": "^1.0.0",
 		"postcss-mimic.css-data": "^1.0.0",
