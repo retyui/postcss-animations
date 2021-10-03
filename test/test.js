@@ -1,50 +1,73 @@
-import { expect } from "chai";
-import postcss from "postcss";
-import animationData from "postcss-animation.css-data";
-import magicData from "postcss-magic.css-data";
-import mimicData from "postcss-mimic.css-data";
-import tuesdayData from "postcss-tuesday.css-data";
-import postcssAnimations from "../lib/index";
+const { expect } = require("chai");
+const postcss = require("postcss");
+const animationData = require("postcss-animation.css-data");
+const magicData = require("postcss-magic.css-data");
+const mimicData = require("postcss-mimic.css-data");
+const tuesdayData = require("postcss-tuesday.css-data");
+const postcssAnimations = require("../lib/index");
 
-function test(input, output, done, plOpt) {
-	const opt = {
-		data: [animationData, magicData, mimicData, tuesdayData],
-		disableCheckCssVariables: false,
-		...plOpt
-	};
+function clearWhiteSpaces(css) {
+  return css.replace(/[ \n\t]/g, "");
+}
 
-	postcss(postcssAnimations(opt))
-		.process(input)
-		.then(({ css }) => {
-			expect(css.replace(/[ \n\t]/g, "")).to.eql(
-				output.replace(/[ \n\t]/g, "")
-			);
-			done();
-		});
+function test(input, output, plOpt) {
+  const options = {
+    data: [animationData, magicData, mimicData, tuesdayData],
+    disableCheckCssVariables: false,
+    checkDuplications: false,
+    ...plOpt,
+  };
+  const plugins = [postcssAnimations(options)];
+
+  return postcss(plugins)
+    .process(input, { from: "test.css" })
+    .then(({ css }) =>
+      expect(clearWhiteSpaces(css)).to.eql(clearWhiteSpaces(output))
+    );
 }
 
 describe("postcss-animations", () => {
-	describe("dafault options", () => {
-		describe("animation-name", () => {
-			it("Base example", done => {
-				const input = ".tdFadeIn { animation-name: tdFadeIn; }";
+  describe("default options", () => {
+    describe("animation-name", () => {
+      it("Base example", async () => {
+        const input = ".tdFadeIn { animation-name: tdFadeIn; }";
 
-				test(
-					input,
-					`
+        await test(
+          input,
+          `
 					.tdFadeIn {
 						animation-name:tdFadeIn;
 					}
 					@keyframes tdFadeIn {
 						0%{ opacity: 0; }
 						100%{ opacity: 1; }
-					}`,
-					done
-				);
-			});
+					}`
+        );
+      });
 
-			it("Custom properties (--*)", done => {
-				const input = `
+      it("Duplicate example", async () => {
+        const input =
+          ".tdFadeIn { animation-name: tdFadeIn; }" +
+          ".tdFadeIn2 { animation-name: tdFadeIn; }";
+
+        await test(
+          input,
+          `
+					.tdFadeIn {
+						animation-name:tdFadeIn;
+					}
+					.tdFadeIn2 {
+						animation-name:tdFadeIn;
+					}
+					@keyframes tdFadeIn {
+						0%{ opacity: 0; }
+						100%{ opacity: 1; }
+					}`
+        );
+      });
+
+      it("Custom properties (--*)", async () => {
+        const input = `
 					:root {
 						--fade-in-animation-name: tdFadeOut;
 					}
@@ -52,9 +75,9 @@ describe("postcss-animations", () => {
 						animation-name: var(--fade-in-animation-name);
 					}`;
 
-				test(
-					input,
-					`
+        await test(
+          input,
+          `
 					:root{
 						--fade-in-animation-name: tdFadeOut;
 					}
@@ -64,35 +87,70 @@ describe("postcss-animations", () => {
 					@keyframes tdFadeOut {
 						0%{opacity:1;}
 						100%{opacity:0;}
-					}`,
-					done
-				);
-			});
-		});
+					}`
+        );
+      });
 
-		describe("animation", () => {
-			it("Base example", done => {
-				const input = `
+      it("Duplicate custom properties (--*)", async () => {
+        const input = `
+					:root {
+						--fade-in-animation-name: tdFadeOut;
+					}
+					.tdFadeOut {
+						animation-name: var(--fade-in-animation-name);
+					}
+					.tdFadeOut2 {
+						animation-name: var(--fade-in-animation-name);
+					}
+					.tdFadeOut3 {
+						animation-name: tdFadeOut;
+					}`;
+
+        await test(
+          input,
+          `
+					:root{
+						--fade-in-animation-name: tdFadeOut;
+					}
+					.tdFadeOut {
+						animation-name: var(--fade-in-animation-name);
+					}
+					.tdFadeOut2 {
+						animation-name: var(--fade-in-animation-name);
+					}
+					.tdFadeOut3 {
+						animation-name: tdFadeOut;
+					}
+					@keyframes tdFadeOut {
+						0%{opacity:1;}
+						100%{opacity:0;}
+					}`
+        );
+      });
+    });
+
+    describe("animation", () => {
+      it("Base example", async () => {
+        const input = `
 				.tdFadeIn {
 					animation: tdFadeIn 5s infinite;
 				}`;
 
-				test(
-					input,
-					`
+        await test(
+          input,
+          `
 					.tdFadeIn {
 						animation:tdFadeIn 5s infinite;
 					}
 					@keyframes tdFadeIn {
 						0%{opacity:0;}
 						100%{opacity:1;}
-					}`,
-					done
-				);
-			});
+					}`
+        );
+      });
 
-			it("Custom properties (--*)", done => {
-				const input = `
+      it("Custom properties (--*)", async () => {
+        const input = `
 				:root {
 					--fade-in-animation: tdFadeOut;
 				}
@@ -100,9 +158,9 @@ describe("postcss-animations", () => {
 					animation: var(--fade-in-animation) 5s infinite;
 				}`;
 
-				test(
-					input,
-					`
+        await test(
+          input,
+          `
 					:root {
 						--fade-in-animation: tdFadeOut;
 					}
@@ -112,23 +170,22 @@ describe("postcss-animations", () => {
 					@keyframes tdFadeOut {
 						0%{opacity:1;}
 						100%{opacity:0;}
-					}`,
-					done
-				);
-			});
-		});
-	});
+					}`
+        );
+      });
+    });
+  });
 
-	describe("animation libs", () => {
-		it("animation.css", done => {
-			const input = `
+  describe("animation libs", () => {
+    it("animation.css", async () => {
+      const input = `
 			.jackInTheBox {
 				animation-name: jackInTheBox;
 			}`;
 
-			test(
-				input,
-				`
+      await test(
+        input,
+        `
 				.jackInTheBox {
 					animation-name: jackInTheBox;
 				}
@@ -137,13 +194,12 @@ describe("postcss-animations", () => {
 					50%{transform:rotate(-10deg);}
 					70%{transform:rotate(3deg);}
 					to{opacity:1;transform:scale(1);}
-				}`,
-				done
-			);
-		});
+				}`
+      );
+    });
 
-		it("magic.css", done => {
-			const input = `
+    it("magic.css", async () => {
+      const input = `
 			:root {
 				--fade-in-animation-name: bombLeftOut;
 			}
@@ -151,9 +207,9 @@ describe("postcss-animations", () => {
 				animation-name: var(--fade-in-animation-name);
 			}`;
 
-			test(
-				input,
-				`
+      await test(
+        input,
+        `
 				:root {
 					--fade-in-animation-name: bombLeftOut;
 				}
@@ -164,12 +220,11 @@ describe("postcss-animations", () => {
 					0%{opacity:1;transform-origin:50%50%;transform:rotate(0deg);filter:blur(0px);}
 					50%{opacity:1;transform-origin:-100%50%;transform:rotate(-160deg);filter:blur(0px);}
 					100%{opacity:0;transform-origin:-100%50%;transform:rotate(-160deg);filter:blur(20px);}
-				}`,
-				done
-			);
-		});
-		it("tuesday", done => {
-			const input = `
+				}`
+      );
+    });
+    it("tuesday", async () => {
+      const input = `
 			:root {
 				--fade-in-animation-name: tdHingeFlipIn;
 			}
@@ -177,9 +232,9 @@ describe("postcss-animations", () => {
 				animation-name: var(--fade-in-animation-name);
 			}`;
 
-			test(
-				input,
-				`
+      await test(
+        input,
+        `
 				:root {
 					--fade-in-animation-name: tdHingeFlipIn;
 				}
@@ -190,13 +245,12 @@ describe("postcss-animations", () => {
 					0%{opacity:0;transform:perspective(600px)rotateX(0deg);transform-origin:centertop;animation-timing-function:cubic-bezier(0,0.59,0.375,1);}
 					50%{transform:perspective(600px)rotateX(-10deg);transform-origin:centertop;animation-timing-function:ease-in;}
 					100%{opacity:1;transform:perspective(600px)rotateX(0deg);transform-origin:centertop;animation-timing-function:ease-out;}
-				}`,
-				done
-			);
-		});
+				}`
+      );
+    });
 
-		it("mimic", done => {
-			const input = `
+    it("mimic", async () => {
+      const input = `
 			:root {
 				--fade-in-animation-name: lawnMower;
 			}
@@ -204,9 +258,9 @@ describe("postcss-animations", () => {
 				animation-name: var(--fade-in-animation-name);
 			}`;
 
-			test(
-				input,
-				`
+      await test(
+        input,
+        `
 				:root {
 					--fade-in-animation-name: lawnMower;
 				}
@@ -216,35 +270,34 @@ describe("postcss-animations", () => {
 				@keyframes lawnMower{
 					0%{opacity:1;}
 					to{opacity:1;transform:translate3d(0, 0, 0) rotateY(12225deg);}
-				}`,
-				done
-			);
-		});
-	});
+				}`
+      );
+    });
+  });
 
-	describe("Options", () => {
-		it("disableCheckCssVariables: true", done => {
-			const input = `
+  describe("Options", () => {
+    it("disableCheckCssVariables: true", async () => {
+      const input = `
 			:root {
 				--fade-in-animation-name: bombLeftOut;
 			}
 			.bombLeftOut {
 				animation-name: var(--fade-in-animation-name);
 			}`;
-			test(input, input, done, { disableCheckCssVariables: true });
-		});
+      await test(input, input, { disableCheckCssVariables: true });
+    });
 
-		it("disableCheckCssVariables: false", done => {
-			const input = `
+    it("disableCheckCssVariables: false", async () => {
+      const input = `
 			:root {
 				--fade-in-animation-name: bombLeftOut;
 			}
 			.bombLeftOut {
 				animation-name: var(--fade-in-animation-name);
 			}`;
-			test(
-				input,
-				`
+      await test(
+        input,
+        `
 				:root {
 					--fade-in-animation-name: bombLeftOut;
 				}
@@ -256,16 +309,15 @@ describe("postcss-animations", () => {
 					50%{opacity:1;transform-origin:-100%50%;transform:rotate(-160deg);filter:blur(0px);}
 					100%{opacity:0;transform-origin:-100%50%;transform:rotate(-160deg);filter:blur(20px);}
 				}`,
-				done,
-				{ disableCheckCssVariables: false }
-			);
-		});
+        { disableCheckCssVariables: false }
+      );
+    });
 
-		it("custom: [{},{},...]", done => {
-			const input = `:root{ animation-name: customAnim2; }`;
-			test(
-				input,
-				`
+    it("custom: [{},{},...]", async () => {
+      const input = `:root{ animation-name: customAnim2; }`;
+      await test(
+        input,
+        `
 				:root {
 					animation-name: customAnim2;
 				}
@@ -273,66 +325,33 @@ describe("postcss-animations", () => {
 					0%{opacity:0;}
 					100%{opacity:1;}
 				}`,
-				done,
-				{
-					data: [
-						{
-							customAnim: `@keyframes customAnim{
+        {
+          data: [
+            {
+              customAnim: `@keyframes customAnim{
 								0%{opacity:1;}
 								100%{opacity:0;}
-							}`
-						},
-						{
-							customAnim2: `@keyframes customAnim2{
+							}`,
+            },
+            {
+              customAnim2: `@keyframes customAnim2{
 								0%{opacity:0;}
 								100%{opacity:1;}
-							}`
-						}
-					]
-				}
-			);
-		});
+							}`,
+            },
+          ],
+        }
+      );
+    });
 
-		it("custom: [{},{},...]", done => {
-			const input = `:root{ animation-name: customAnim; }`;
-			test(
-				input,
-				`
-				:root {
-					animation-name: customAnim;
-				}
-				@keyframes customAnim {
-					0%{opacity:1;}
-					100%{opacity:0;}
-				}`,
-				done,
-				{
-					data: [
-						{
-							customAnim: `@keyframes customAnim{
-								0%{opacity:1;}
-								100%{opacity:0;}
-							}`
-						},
-						{
-							customAnim: `@keyframes customAnim2{
-								0%{opacity:0;}
-								100%{opacity:1;}
-							}`
-						}
-					]
-				}
-			);
-		});
-
-		it("custom: {}", done => {
-			const input = `
+    it("custom: {}", async () => {
+      const input = `
 			:root {
 				animation-name: custom-animation-name-out;
 			}`;
-			test(
-				input,
-				`
+      await test(
+        input,
+        `
 				:root {
 					animation-name: custom-animation-name-out;
 				}
@@ -340,20 +359,19 @@ describe("postcss-animations", () => {
 					0%{opacity:1;}
 					100%{opacity:0;}
 				}`,
-				done,
-				{
-					data: {
-						"custom-animation-name-in": `@keyframes custom-animation-name-in{
+        {
+          data: {
+            "custom-animation-name-in": `@keyframes custom-animation-name-in{
 							0%{opacity:0;}
 							100%{opacity:1;}
 						}`,
-						"custom-animation-name-out": `@keyframes custom-animation-name-out{
+            "custom-animation-name-out": `@keyframes custom-animation-name-out{
 							0%{opacity:1;}
 							100%{opacity:0;}
-						}`
-					}
-				}
-			);
-		});
-	});
+						}`,
+          },
+        }
+      );
+    });
+  });
 });

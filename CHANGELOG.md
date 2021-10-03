@@ -2,7 +2,15 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 8.0.0
+
+- Migrate to [postcss@8.x.x](https://github.com/postcss/postcss/wiki/PostCSS-8-for-end-users)
+- Minimum required [Node.js](https://nodejs.org/en/about/releases/) version is `10.0.0`
+- Add typescript definitions
+- Update devDependencies
+
 ## 7.0.1
+
 - Update dependencies
 - Migration to postcss@7
 - Update babel@7
