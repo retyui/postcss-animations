@@ -1,65 +1,72 @@
 {
-	"name": "postcss-animations",
-	"version": "7.0.1",
-	"description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
-	"license": "MIT",
-	"main": "lib/index.js",
-	"files": [
-		"lib"
-	],
-	"scripts": {
-		"build": "babel src --out-dir lib",
-		"lint": "eslint --fix ./src/*.js",
-		"pretty": "prettier  \"test/*.js\" \"src/*.js\" \".eslintrc.js\" --write",
-		"prebuild": "npm run lint",
-		"pretest": "npm run build",
-		"test": "mocha --compilers js:@babel/register ./test/test.js",
-		"precommit": "lint-staged"
-	},
-	"dependencies": {
-		"object.entries": "^1.0.4",
-		"postcss-value-parser": "^3.0.0"
-	},
-	"peerDependencies": {
-		"postcss": "^7.0.0"
-	},
-	"keywords": [
-		"animate.css",
-		"animation",
-		"css",
-		"keyframes",
-		"magic.css",
-		"mimic.css",
-		"postcss",
-		"postcss-plugin",
-		"tuesday.css"
-	],
-	"devDependencies": {
-		"@babel/cli": "^7.0.0",
-		"@babel/core": "^7.0.0",
-		"@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-		"@babel/preset-env": "^7.0.0",
-		"@babel/register": "^7.0.0",
-		"@babel/plugin-proposal-class-properties": "^7.1.0",
-		"babel-eslint": "^9.0.0",
-		"babel-plugin-add-module-exports": "^1.0.0",
-		"chai": "4.1.2",
-		"eslint": "^5.6.0",
-		"eslint-config-prettier": "^3.1.0",
-		"eslint-plugin-prettier": "^2.6.0",
-		"husky": "^1.0.0-rc.14",
-		"lint-staged": "^7.0.5",
-		"mocha": "^5.2.0",
-		"postcss": "^7.0.2",
-		"postcss-animation.css-data": "^1.0.0",
-		"postcss-magic.css-data": "^1.0.0",
-		"postcss-mimic.css-data": "^1.0.0",
-		"postcss-tuesday.css-data": "^1.0.0",
-		"prettier": "^1.12.1"
-	},
-	"repository": "https://github.com/retyui/postcss-animations",
-	"author": "David Narbutovich <vamnemne@gmail.com>",
-	"engines": {
-		"node": ">=6.11"
-	}
+  "name": "postcss-animations",
+  "version": "8.0.0",
+  "description": "PostCSS plugin that adds `@keyframes` from animate.css, tuesday.css, magic.css, mimic.css",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "lib",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "prebuild": "yarn lint",
+    "build": "babel src --out-dir lib",
+    "postbuild": "prettier \"./**/*.js\" --write",
+    "lint": "eslint --fix ./src/*.js ./test/test.js",
+    "pretest": "yarn build",
+    "test": "mocha ./test/test.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "postcss-value-parser": "^4.1.0"
+  },
+  "peerDependencies": {
+    "postcss": ">=8.1.0"
+  },
+  "peerDependenciesMeta": {
+    "postcss": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "animate.css",
+    "animation",
+    "css",
+    "keyframes",
+    "magic.css",
+    "mimic.css",
+    "postcss",
+    "postcss-plugin",
+    "tuesday.css"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.7",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/register": "^7.15.3",
+    "chai": "4.3.4",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "mocha": "^9.1.2",
+    "postcss": "^8.3.8",
+    "postcss-animation.css-data": "^1.0.0",
+    "postcss-magic.css-data": "^1.0.0",
+    "postcss-mimic.css-data": "^1.0.0",
+    "postcss-tuesday.css-data": "^1.0.0",
+    "prettier": "^2.4.1"
+  },
+  "repository": "https://github.com/retyui/postcss-animations",
+  "author": "David <4661784+retyui@users.noreply.github.com>",
+  "engines": {
+    "node": ">=10"
+  }
 }

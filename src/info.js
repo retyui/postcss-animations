@@ -1,1 +1,21 @@
 export const PLUGIN_NAME = "postcss-animations";
+export const ignoredWords = [
+  "infinite",
+  "alternate",
+  "alternate-reverse",
+  "backwards",
+  "both",
+  "ease",
+  "ease-in",
+  "ease-in-out",
+  "ease-out",
+  "forwards",
+  "linear",
+  "none",
+  "normal",
+  "paused",
+  "reverse",
+  "running",
+  "step-end",
+  "step-start",
+];
